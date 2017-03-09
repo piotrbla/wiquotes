@@ -11,7 +11,7 @@ namespace wiquotes
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainWindow_Load(object sender, EventArgs e)
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             this.Text = "WI Quotes Version: " + assembly.GetName().Version.ToString();
