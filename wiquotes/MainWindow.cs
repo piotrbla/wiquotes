@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using wiquotes.Properties;
 
 namespace wiquotes
 {
@@ -14,7 +15,7 @@ namespace wiquotes
         private void MainWindow_Load(object sender, EventArgs e)
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            this.Text = "WI Quotes Version: " + assembly.GetName().Version.ToString();
+            this.Text = Resources.MainWindow_MainWindow_Load_WI_Quotes_Version__ + assembly.GetName().Version.ToString();
         }
     }
 }
