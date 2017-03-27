@@ -29,5 +29,11 @@ namespace wiquotes
             var updaterWindow = new UpdaterForm {MdiParent = this};
             updaterWindow.Show();
         }
+
+        private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var preferencesWindow = new PreferencesForm {MdiParent = this};
+            preferencesWindow.Show();
+        }
     }
 }
