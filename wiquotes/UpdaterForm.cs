@@ -25,7 +25,7 @@ namespace wiquotes
         {
 
                 // chyba brakuje zabezpieczenia 
-                var url = url_bar.Text;
+                string url = url_bar.Text;
                 list_ftp.Items.Clear();
                 if (url_bar.Text == String.Empty)
                 {
@@ -40,22 +40,11 @@ namespace wiquotes
                     foreach (var temp in OBJ.UnzipFromStream(data, @"c:\temp"))
                     {
                         list_ftp.Items.Add(temp);
+
                     }
                 }
             }
-
-        private void add_item_Click(object sender, EventArgs e)
-        {
-            var select = list_ftp.SelectedItem;
-            added_list.Items.Add(select);
         }
-
-        private void delete_item_Click(object sender, EventArgs e)
-        {
-            var selected = added_list.SelectedItem;
-            added_list.Items.Remove(selected);
-        }
-    }
     }
 
     public class ObjectFromLibrary
@@ -73,9 +62,9 @@ namespace wiquotes
                 //  String entryFileName = zipEntry.Name;
                 LIB.Add(zipEntry.Name);
                 zipEntry = zipInputStream.GetNextEntry();
-            }
+        }
             return LIB;
         }
           
-    }
+        }
         
