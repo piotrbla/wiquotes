@@ -34,6 +34,7 @@
             this.add_list_button = new System.Windows.Forms.Button();
             this.add_item = new System.Windows.Forms.Button();
             this.delete_item = new System.Windows.Forms.Button();
+            this.extract_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // url_bar
@@ -89,11 +90,22 @@
             this.delete_item.UseVisualStyleBackColor = true;
             this.delete_item.Click += new System.EventHandler(this.delete_item_Click);
             // 
+            // extract_button
+            // 
+            this.extract_button.Location = new System.Drawing.Point(12, 253);
+            this.extract_button.Name = "extract_button";
+            this.extract_button.Size = new System.Drawing.Size(75, 23);
+            this.extract_button.TabIndex = 6;
+            this.extract_button.Text = "extract";
+            this.extract_button.UseVisualStyleBackColor = true;
+            this.extract_button.Click += new System.EventHandler(this.extract_button_Click);
+            // 
             // UpdaterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 361);
+            this.Controls.Add(this.extract_button);
             this.Controls.Add(this.delete_item);
             this.Controls.Add(this.add_item);
             this.Controls.Add(this.add_list_button);
@@ -115,5 +127,6 @@
         private System.Windows.Forms.Button add_list_button;
         private System.Windows.Forms.Button add_item;
         private System.Windows.Forms.Button delete_item;
+        private System.Windows.Forms.Button extract_button;
     }
 }
