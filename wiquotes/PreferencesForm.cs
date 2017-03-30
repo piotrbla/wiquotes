@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace wiquotes
 {
     public partial class PreferencesForm : Form
@@ -17,32 +18,67 @@ namespace wiquotes
             InitializeComponent();
         }
 
+
         private void PreferencesForm_Load(object sender, EventArgs e)
         {
             TabPage chart = newTab("Kwoty");
             chart.Controls.Add(newLabel("Kwota 1: ", 100, 50, 50, 20));
             chart.Controls.Add(newSpinBox(50, 200, 200, 20));
-            chart.Controls.Add(newSpinBox(50, 200, 260, 20));
-            chart.Controls.Add(newLabel(",", 20, 20, 250, 20));
 
             chart.Controls.Add(newLabel("Kwota 2: ", 100, 50, 50, 120));
             chart.Controls.Add(newSpinBox(50, 200, 200, 120));
-            chart.Controls.Add(newSpinBox(50, 200, 260, 120));
-            chart.Controls.Add(newLabel(",", 20, 20, 250, 120));
 
             chart.Controls.Add(newLabel("Odsetki: ", 100, 50, 50, 220));
             chart.Controls.Add(newSpinBox(50, 200, 200, 220));
-            chart.Controls.Add(newSpinBox(50, 200, 260, 220));
-            chart.Controls.Add(newLabel(",", 20, 20, 250, 220));
+            //pobieranie tych wartosci do bazy ?
+
+            TabPage favs = newTab("Favourites");
+            favs.Controls.Add(newLabel("Enter your favourite websites:", 200, 30, 50, 20));
+            favs.Controls.Add(newTextBox(300, 30, 50, 60));
+            Button but = newButton("Accept", 50, 30, 355, 55);
+            favs.Controls.Add(but);
+            favs.Click += new EventHandler(buttonHandler);
+
+
         }
+
+        private void buttonHandler(object sender, EventArgs e)
+        {
+            //tworz newLabel i wyswietlaj pod textboxem
+            MessageBox.Show("lala");
+
+
+        }
+        private Button newButton(string name, int sizex, int sizey, int locationx, int locationy)
+        {
+            Button button = new Button();
+            button.Text = name;
+            button.Size = new Size(sizex, sizey);
+            button.Location = new Point(locationx, locationy);
+
+            return button;
+        }
+
+        private TextBox newTextBox(int sizex, int sizey, int locationx, int locationy)
+        {
+            TextBox box = new TextBox();
+            box.Size = new Size(sizex, sizey);
+            box.Location = new Point(locationx, locationy);
+
+            return box;
+        }
+
 
         private NumericUpDown newSpinBox(int sizex, int sizey, int locationx, int locationy)
         {
             NumericUpDown spin = new NumericUpDown();
             spin.Size = new Size(sizex, sizey);
             spin.Location = new Point(locationx, locationy);
+            spin.DecimalPlaces = 2;
+            spin.Increment = 0.1m;
             return spin;
         }
+
         private Label newLabel(string name, int sizex, int sizey, int locationx, int locationy)
         {
             Label lab = new Label();
