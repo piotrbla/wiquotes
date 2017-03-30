@@ -18,7 +18,8 @@ namespace wiquotes
             InitializeComponent();
         }
 
-
+        int yValue = 70;
+        bool buttonClicked = false;
         private void PreferencesForm_Load(object sender, EventArgs e)
         {
             TabPage chart = newTab("Kwoty");
@@ -37,16 +38,21 @@ namespace wiquotes
             favs.Controls.Add(newTextBox(300, 30, 50, 60));
             Button but = newButton("Accept", 50, 30, 355, 55);
             favs.Controls.Add(but);
-            favs.Click += new EventHandler(buttonHandler);
-
+            
+            but.Click += new EventHandler(buttonHandler);
+            if(buttonClicked)
+            {
+                favs.Controls.Add(newLabel("tekst z textboxa", 10, 30, 50, yValue));
+            }
+            
 
         }
-
+        
         private void buttonHandler(object sender, EventArgs e)
         {
-            //tworz newLabel i wyswietlaj pod textboxem
-            MessageBox.Show("lala");
-
+            buttonClicked = true;
+            //MessageBox.Show("clicked");
+            yValue += 20;
 
         }
         private Button newButton(string name, int sizex, int sizey, int locationx, int locationy)
