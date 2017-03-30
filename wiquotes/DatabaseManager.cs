@@ -10,18 +10,24 @@ namespace wiquotes
 
         public static void InitFile()
         {
-            SQLiteConnection.CreateFile(DatabaseName);
+            if (!System.IO.File.Exists(DatabaseName))
+                SQLiteConnection.CreateFile(DatabaseName);
         }
 
         public void CreatTables()
         {
-            string sql = "CREATE TABLE preferences (name VARCHAR(40), code varchar(20), value varchar(500))";
+            string sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='preferences'";
             SQLiteCommand command = new SQLiteCommand(sql, connection);
-            command.ExecuteNonQuery();
+            int count  = command.ExecuteNonQuery();//TODO: other tables
+            if (count != 1)
+            {
+                sql = "CREATE TABLE preferences (name VARCHAR(40), code varchar(20), value varchar(500))";
+                command = new SQLiteCommand(sql, connection);
+                command.ExecuteNonQuery();
+            }
         }
         public DatabaseManager()
         {
-
             connection = new SQLiteConnection("Data Source=" + DatabaseName + ";Version=3;");
             connection.Open();
         }
@@ -38,7 +44,6 @@ namespace wiquotes
             string sql = "select * from highscores order by score desc";
             SQLiteCommand command = new SQLiteCommand(sql, connection);
             SQLiteDataReader reader = command.ExecuteReader();
-            return reader;
             return reader;
         }
     }

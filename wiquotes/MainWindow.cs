@@ -7,9 +7,14 @@ namespace wiquotes
 {
     public partial class MainWindow : Form
     {
+        private readonly DatabaseManager database;
         public MainWindow()
         {
             InitializeComponent();
+            DatabaseManager.InitFile();
+            database = new DatabaseManager();
+            database.CreatTables();
+            
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
@@ -32,7 +37,7 @@ namespace wiquotes
 
         private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var preferencesWindow = new PreferencesForm {MdiParent = this};
+            var preferencesWindow = new PreferencesForm {MdiParent = this};//TODO: pass database
             preferencesWindow.Show();
         }
     }
