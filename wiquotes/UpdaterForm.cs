@@ -19,8 +19,8 @@ namespace wiquotes
         public void add_list_button_Click(object sender, EventArgs e)
         {
 
-            var Url = "http://bossa.pl/pub/futures/omega/omegafut.zip";
-            list_ftp.Items.Clear();
+            
+             list_ftp.Items.Clear();
             if (url_bar.Text == String.Empty)
                 MessageBox.Show("PODAJ ADRES");
             else
