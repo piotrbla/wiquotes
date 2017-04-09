@@ -18,8 +18,7 @@ namespace wiquotes
             InitializeComponent();
         }
 
-        int yValue = 70;
-        bool buttonClicked = false;
+      
         private void PreferencesForm_Load(object sender, EventArgs e)
         {
             TabPage chart = newTab("Kwoty");
@@ -31,30 +30,43 @@ namespace wiquotes
 
             chart.Controls.Add(newLabel("Odsetki: ", 100, 50, 50, 220));
             chart.Controls.Add(newSpinBox(50, 200, 200, 220));
-            //pobieranie tych wartosci do bazy ?
-
+            
             TabPage favs = newTab("Favourites");
             favs.Controls.Add(newLabel("Enter your favourite websites:", 200, 30, 50, 20));
             favs.Controls.Add(newTextBox(300, 30, 50, 60));
             Button but = newButton("Accept", 50, 30, 355, 55);
             favs.Controls.Add(but);
-            
             but.Click += new EventHandler(buttonHandler);
-            if(buttonClicked)
-            {
-                favs.Controls.Add(newLabel("tekst z textboxa", 10, 30, 50, yValue));
-            }
-            
+
+            TabPage colors = newTab("Colors");
+            colors.Controls.Add(newLabel("Graph: ", 100, 50, 50, 20));
+            Button colorBut = (newButton("Change color", 50, 200, 200, 20));
+            colors.Controls.Add(colorBut);
+
+            colors.Controls.Add(newLabel("Mesh: ", 100, 50, 50, 120));
+            colorBut = (newButton("Change color", 50, 200, 200, 20));
+            colors.Controls.Add(colorBut);
+
+            colors.Controls.Add(newLabel("Background: ", 100, 50, 50, 220));
+            colorBut = newButton("Change color", 50, 200, 200, 220);
+            colors.Controls.Add(colorBut);
+            colorBut.Click += new EventHandler(colorButClicked);
+
+            TabPage analysis = newTab("Analysis"); 
+            //nazwa + kod analizyS
+
 
         }
         
         private void buttonHandler(object sender, EventArgs e)
-        {
-            buttonClicked = true;
-            //MessageBox.Show("clicked");
-            yValue += 20;
-
+        {           
+            //zapisywanie adresow w liscie
         }
+        private void colorButClicked(object sender, EventArgs e)
+        {
+            //zapisywanie koloru do bazy
+        }
+
         private Button newButton(string name, int sizex, int sizey, int locationx, int locationy)
         {
             Button button = new Button();
@@ -73,7 +85,6 @@ namespace wiquotes
 
             return box;
         }
-
 
         private NumericUpDown newSpinBox(int sizex, int sizey, int locationx, int locationy)
         {
