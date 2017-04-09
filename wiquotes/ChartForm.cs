@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 using System.Windows.Forms.DataVisualization.Charting;
-using System.Globalization;
 
 namespace wiquotes
 {
     public partial class ChartForm : Form
     {
+        private bool is_constructed = false;
         private List<DiagramData> TEST_CHART_DATA;
-
         private List<Diagram> diagrams;
         private int charts_quantity;
 
@@ -25,6 +18,7 @@ namespace wiquotes
             InitializeComponent();
             diagrams = new List<Diagram>();
             TEST_CHART_DATA = new List<DiagramData>();
+            is_constructed = true;
         }
 
         private void ChartForm_Load(object sender, EventArgs e)
@@ -45,7 +39,8 @@ namespace wiquotes
 
         private void resize_window(object sender, EventArgs e)
         {
-            resize_diagrams();
+            if (is_constructed)
+                resize_diagrams();
         }
 
         private void resize_diagrams()

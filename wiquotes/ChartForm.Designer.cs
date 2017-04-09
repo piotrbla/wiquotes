@@ -34,9 +34,10 @@
             // 
             // Add_chart
             // 
-            this.Add_chart.Location = new System.Drawing.Point(12, 10);
+            this.Add_chart.Location = new System.Drawing.Point(18, 15);
+            this.Add_chart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Add_chart.Name = "Add_chart";
-            this.Add_chart.Size = new System.Drawing.Size(75, 23);
+            this.Add_chart.Size = new System.Drawing.Size(112, 35);
             this.Add_chart.TabIndex = 3;
             this.Add_chart.Text = "Dodaj";
             this.Add_chart.UseVisualStyleBackColor = true;
@@ -44,9 +45,10 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 39);
+            this.button2.Location = new System.Drawing.Point(18, 60);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(112, 35);
             this.button2.TabIndex = 4;
             this.button2.Text = "Odejmij";
             this.button2.UseVisualStyleBackColor = true;
@@ -54,12 +56,13 @@
             // 
             // ChartForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 362);
+            this.ClientSize = new System.Drawing.Size(876, 557);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.Add_chart);
-            this.MinimumSize = new System.Drawing.Size(300, 200);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MinimumSize = new System.Drawing.Size(439, 278);
             this.Name = "ChartForm";
             this.Text = "ChartForm";
             this.Load += new System.EventHandler(this.ChartForm_Load);
