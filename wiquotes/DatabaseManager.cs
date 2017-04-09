@@ -16,9 +16,9 @@ namespace wiquotes
 
         public void CreatTables()
         {
-            string sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='preferences'";
+            string sql = "SELECT COUNT(name) FROM sqlite_master WHERE type='table' AND name='preferences'";
             SQLiteCommand command = new SQLiteCommand(sql, connection);
-            int count  = command.ExecuteNonQuery();//TODO: other tables
+            int count  = Convert.ToInt32(command.ExecuteScalar());//TODO: other tables
             if (count != 1)
             {
                 sql = "CREATE TABLE preferences (name VARCHAR(40), code varchar(20), value varchar(500))";
