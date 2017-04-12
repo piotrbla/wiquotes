@@ -58,39 +58,39 @@ namespace wiquotes
 
             TabPage colors = newTab("Colors");
             newLabel(colors,"Graph: ", 100, 50, 50, 20);
-            Button graph = newButton(colors,"Change color", 150, 30, 200, 20);
-
+            Button but1 = newButton(colors,"Change color", 150, 30, 200, 20);
+            but1.Name = "graph";
             newLabel(colors,"Mesh: ", 100, 50, 50, 120);
-            Button mesh = newButton(colors, "Change color", 150, 30, 200, 120);
-
+            Button but2 = newButton(colors, "Change color", 150, 30, 200, 120);
+            but2.Name = "mesh";
             newLabel(colors,"Background: ", 100, 50, 50, 220);
-            Button background = newButton(colors,"Change color", 150, 30, 200, 220);
-
-            graph.Click += new EventHandler(colorButClicked);
-            mesh.Click += new EventHandler(colorButClicked);
-            background.Click += new EventHandler(colorButClicked);
+            Button but3 = newButton(colors,"Change color", 150, 30, 200, 220);
+            but3.Name = "background";
+            but1.Click += new EventHandler(colorButClicked);
+            but2.Click += new EventHandler(colorButClicked);
+            but3.Click += new EventHandler(colorButClicked);
 
             TabPage analysis = newTab("Analysis");
             //nazwa + kod analizyS
 
-            calabazka();
+            //calabazka();
         }
-        private void calabazka()
-        {
-            string sql = "select * from kwoty";
-            SQLiteCommand command = new SQLiteCommand(sql, databaseConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-                MessageBox.Show("Name: " + reader["name"] + "\tAmount: " + reader["amount"]);
+        //private void calabazka()
+        //{
+        //    string sql = "select * from kwoty";
+        //    SQLiteCommand command = new SQLiteCommand(sql, databaseConnection);
+        //    SQLiteDataReader reader = command.ExecuteReader();
+        //    while (reader.Read())
+        //        MessageBox.Show("Name: " + reader["name"] + "\tAmount: " + reader["amount"]);
 
-            sql = "select * from colors";
-            command = new SQLiteCommand(sql, databaseConnection);
-            reader = command.ExecuteReader();
-            while (reader.Read())
-                MessageBox.Show("Name: " + reader["name"] + "\tColor: " + reader["color"]);
+        //    sql = "select * from colors";
+        //    command = new SQLiteCommand(sql, databaseConnection);
+        //    reader = command.ExecuteReader();
+        //    while (reader.Read())
+        //        MessageBox.Show("Name: " + reader["name"] + "\tColor: " + reader["color"]);
 
 
-        }
+        //}
         private void createTable(string table, string var2, string type)
         {
             string sql = "CREATE TABLE " + table + "(name VARCHAR(20), " + var2 + ' ' + type + " )";
@@ -121,7 +121,7 @@ namespace wiquotes
         private void butKHandler(object sender, EventArgs e)
         {
             foreach (KeyValuePair<string, decimal> kvp in vals)
-            { insertIntoTable("kwoty", "name", "amount", Convert.ToString(kvp.Key), Convert.ToString(kvp.Value));
+            { insertIntoTableStr("kwoty", "name", "amount", Convert.ToString(kvp.Key), Convert.ToString(kvp.Value));
 
                 MessageBox.Show(kvp.Key);
                 MessageBox.Show(Convert.ToString(kvp.Value));
