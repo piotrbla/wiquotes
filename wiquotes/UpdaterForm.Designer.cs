@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.url_bar = new System.Windows.Forms.TextBox();
-            this.list_ftp = new System.Windows.Forms.ListBox();
+            this.list_http = new System.Windows.Forms.ListBox();
             this.added_list = new System.Windows.Forms.ListBox();
             this.add_list_button = new System.Windows.Forms.Button();
             this.add_item = new System.Windows.Forms.Button();
@@ -44,13 +44,13 @@
             this.url_bar.Size = new System.Drawing.Size(246, 20);
             this.url_bar.TabIndex = 0;
             // 
-            // list_ftp
+            // list_http
             // 
-            this.list_ftp.FormattingEnabled = true;
-            this.list_ftp.Location = new System.Drawing.Point(12, 110);
-            this.list_ftp.Name = "list_ftp";
-            this.list_ftp.Size = new System.Drawing.Size(120, 95);
-            this.list_ftp.TabIndex = 1;
+            this.list_http.FormattingEnabled = true;
+            this.list_http.Location = new System.Drawing.Point(12, 110);
+            this.list_http.Name = "list_http";
+            this.list_http.Size = new System.Drawing.Size(120, 95);
+            this.list_http.TabIndex = 1;
             // 
             // added_list
             // 
@@ -110,7 +110,7 @@
             this.Controls.Add(this.add_item);
             this.Controls.Add(this.add_list_button);
             this.Controls.Add(this.added_list);
-            this.Controls.Add(this.list_ftp);
+            this.Controls.Add(this.list_http);
             this.Controls.Add(this.url_bar);
             this.Name = "UpdaterForm";
             this.Text = "UpdaterForm";
@@ -122,7 +122,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox url_bar;
-        private System.Windows.Forms.ListBox list_ftp;
+        private System.Windows.Forms.ListBox list_http;
         private System.Windows.Forms.ListBox added_list;
         private System.Windows.Forms.Button add_list_button;
         private System.Windows.Forms.Button add_item;

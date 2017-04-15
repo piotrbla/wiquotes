@@ -6,11 +6,15 @@ using ICSharpCode.SharpZipLib.Core;
 using System.Net;
 using System.IO;
 using System.Linq;
+using RemoteZip;
 
 namespace wiquotes
 {
     public partial class UpdaterForm : Form
     {
+        CreateZipFile NewFile = new CreateZipFile();
+
+
         public UpdaterForm()
         {
             InitializeComponent();
@@ -18,104 +22,110 @@ namespace wiquotes
 
         public void add_list_button_Click(object sender, EventArgs e)
         {
-
             
-             list_ftp.Items.Clear();
+            list_http.Items.Clear();
+            url_bar.Text = "http://bossa.pl/pub/futures/omega/omegafut.zip";
+
+
             if (url_bar.Text == String.Empty)
                 MessageBox.Show("PODAJ ADRES");
             else
             {
-                WebClient WebClient = new WebClient();
-                Stream Data = WebClient.OpenRead(url_bar.Text);
                 
-                foreach (var Temp in ObjectFromLibrary.FromStream(Data))
-                { 
-                    list_ftp.Items.Add(Temp.Name);
+                
+                foreach (var Zip in NewFile.LoadFile(url_bar.Text))
+                {
+                    list_http.Items.Add(Zip);
                 }
 
             }
         }
-        
+
         private void add_item_Click(object sender, EventArgs e)
         {
-            string select = list_ftp.SelectedItem.ToString();
+            string select = list_http.SelectedItem.ToString();
             added_list.Items.Add(select);
         }
 
         private void delete_item_Click(object sender, EventArgs e)
         {
-            var selected = added_list.SelectedItem;
-            added_list.Items.Remove(selected);
+           var selected = added_list.SelectedItem;
+           added_list.Items.Remove(selected);
         }
 
         private void extract_button_Click(object sender, EventArgs e)
         {
-            WebClient webClient = new WebClient();
-            Stream data = webClient.OpenRead(url_bar.Text);
             
-            foreach (string file in added_list.Items)
+            foreach(string File in added_list.Items)
             {
-              ObjectFromLibrary.FromStream(url_bar.Text, file);
-            }
+                if(NewFile.zipedFileList.Contains(File))
+                {
+                    NewFile.SaveFile(NewFile.zipedFileList.IndexOf(File));
+                }
+            }   
         }
     }
 
-    public class ObjectFromLibrary
+    public class InfoAboutZip
     {
         public string Name;
-        public int Size;
+        public long Index;
+        public string ZipFileName;
 
-        public ObjectFromLibrary(string Name, int Size)
+        public InfoAboutZip()
         {
-            this.Name = Name;
-            this.Size = Size;
         }
+    }
+   
+    public class CreateZipFile
+    {
+        readonly System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        public RemoteZipFile zip = new RemoteZipFile();
+        public List<string> zipedFileList = new List<string>();
 
-        static public List<ZipEntry> FromStream(Stream zipStream)
+        public List<string> LoadFile(string Url)
         {
-            List<ZipEntry> entries = new List<ZipEntry>();
-            ZipInputStream zipInputStream = new ZipInputStream(zipStream);
-            ZipEntry zipEntry = zipInputStream.GetNextEntry();
-            while (zipEntry != null)
+            if (zip.Load(Url))
             {
-                entries.Add(zipEntry);
-                zipEntry = zipInputStream.GetNextEntry();
-            }
-            return entries;
-        }
-
-       static public void FromStream(string url, string file1)
-        {
-
-            using (var client = new System.Net.Http.HttpClient())
-            using (var stream = client.GetStreamAsync(url).Result) // tutaj podaje adres 
-            {
-                //var path = Application.StartupPath; // Path.GetTempPath()
-                var basepath = Path.Combine(Application.StartupPath);
-                System.IO.Directory.CreateDirectory(basepath);
-
-                var ar = new System.IO.Compression.ZipArchive(stream, System.IO.Compression.ZipArchiveMode.Read);
-                var entry = ar.Entries.FirstOrDefault(e => e.FullName.EndsWith(file1)); // jakiego pliku szuka
-                if (entry == null)
-                    return;
-
-                var path = Path.Combine(basepath, entry.FullName);
-
-                if (string.IsNullOrEmpty(entry.Name))
+                
+                foreach (ZipEntry zipe in zip)
                 {
-                    System.IO.Directory.CreateDirectory(Path.GetDirectoryName(path));
-                     
-                }
-
-                using (var entryStream = entry.Open())
-                {
-                    System.IO.Directory.CreateDirectory(Path.GetDirectoryName(path));
-                    using (var file = File.Create(path))
-                    {
-                        entryStream.CopyTo(file);
-                    }
+                    zipedFileList.Add(zipe.Name);
+                    InfoAboutZip ZipInfo = new InfoAboutZip();
+                    ZipInfo.Name = zipe.Name;
+                    ZipInfo.ZipFileName = Url;
+                    ZipInfo.Index = zipe.ZipFileIndex;
                 }
             }
+            return zipedFileList;
+        }   
+             
+        public void SaveFile(int IndexInZip)
+        {
+            ZipEntry zipe = zip[IndexInZip];
+            string txtTmp = "";
+            string key = "";
+            string filePath = @"c:\temp\" + zipe.Name;
+            List<decimal> columnValues = new List<decimal>();
+            FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
+            Stream s = zip.GetInputStream(zipe);
+            if (s != null)
+            {
+                StreamReader sr = new StreamReader(s);
+                StreamWriter sw = new StreamWriter(fs);
+                sw.AutoFlush = true;
+                string txt;
+                while ((txt = sr.ReadLine()) != null)
+                {
+                    txtTmp = txtTmp + txt + "\r\n";
+                    sb.AppendLine(txt);
+                }
+                sw.Write(txtTmp);
+                sw.Close();
+                s.Close();
+            }
+
         }
+    
     }
 }
