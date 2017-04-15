@@ -16,14 +16,12 @@ namespace wiquotes
 
         Dictionary<string,TextBox> textboxes = new Dictionary<string,TextBox>();
         SQLiteConnection databaseConnection;
-        Dictionary<string, decimal> vals = new Dictionary<string, decimal>();
-
-        public object NavigationService { get; private set; }
+        Dictionary<string, string> vals = new Dictionary<string, string>();
 
         public PreferencesForm()
         {
             InitializeComponent();
-            databaseConnection = new SQLiteConnection("Data Source=Preferences.sqlite;Version=3;");
+            databaseConnection = new SQLiteConnection("Data Source=wiquotes.sqlite;Version=3;");
             databaseConnection.Open();
             createTable("kwoty", "amount", "DOUBLE");
             createTable("colors", "color", "VARCHAR (30)");
@@ -34,18 +32,19 @@ namespace wiquotes
 
         private void PreferencesForm_Load(object sender, EventArgs e)
         {
+            ////wartosci spinboxow zle wpisywane
             TabPage kwoty = newTab("Kwoty");
             newLabel(kwoty,"Kwota 1: ", 100, 50, 50, 20);
             NumericUpDown spin1 = newSpinBox(kwoty,50, 200, 200, 20);
-            vals.Add("kwota1", spin1.Value);
+            vals.Add("kwota1", Convert.ToString(spin1.Value));
 
             newLabel(kwoty, "Kwota 2: ", 100, 50, 50, 120);
             NumericUpDown spin2 = newSpinBox(kwoty,50, 200, 200, 120);
-            vals.Add("kwota2", spin2.Value);
+            vals.Add("kwota2", Convert.ToString(spin2.Value));
 
             newLabel(kwoty,"Odsetki: ", 100, 50, 50, 220);
             NumericUpDown spin3 = newSpinBox(kwoty,50, 200, 200, 220);
-            vals.Add("odsetki", spin3.Value);
+            vals.Add("odsetki", Convert.ToString(spin3.Value));
 
             Button butK = newButton(kwoty, "Accept", 50, 30, 355, 55);
             butK.Click += new EventHandler(butKHandler);
@@ -71,7 +70,15 @@ namespace wiquotes
             but3.Click += new EventHandler(colorButClicked);
 
             TabPage analysis = newTab("Analysis");
-            //nazwa + kod analizyS
+            newLabel(analysis, "Name", 80, 30, 20, 20);
+            newTextBox(analysis, 150, 30, 20, 50);
+            newTextBox(analysis, 150, 30, 20, 80);
+            newTextBox(analysis, 150, 30, 20, 110);
+            newLabel(analysis, "Code", 80, 30, 220, 20);
+            newTextBox(analysis, 150, 30, 220, 50);
+            newTextBox(analysis, 150, 30, 220, 80);
+            newTextBox(analysis, 150, 30, 220, 110);
+
 
             //calabazka();
         }
@@ -94,8 +101,17 @@ namespace wiquotes
         private void createTable(string table, string var2, string type)
         {
             string sql = "CREATE TABLE " + table + "(name VARCHAR(20), " + var2 + ' ' + type + " )";
-            SQLiteCommand command = new SQLiteCommand(sql, databaseConnection);
-            command.ExecuteNonQuery();
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand(sql, databaseConnection);
+                command.ExecuteNonQuery();
+            }
+            catch(SQLiteException ex)
+            {
+                MessageBox.Show(Convert.ToString(ex));
+            }
+            
+    
         }
         private void insertIntoTable(string table, string type1, string type2, string val1, string val2)
         {
@@ -104,10 +120,10 @@ namespace wiquotes
             SQLiteCommand command = new SQLiteCommand(sql, databaseConnection);
             command.ExecuteNonQuery();
         }
-        private void insertIntoTableStr(string table, string type1, string type2, string val1, string val2)
+        private void insertIntoTableStr(string table, string name1, string name2, string val1, string val2)
         {
             
-            string sql = "insert into " + table + " (" + type1 + "," + type2 + ") values ('" + val1 + "', '" + val2 + "' )";
+            string sql = "insert into " + table + " (" + name1 + "," + name2 + ") values ('" + val1 + "', '" + val2 + "' )";
             MessageBox.Show(sql);
             SQLiteCommand command = new SQLiteCommand(sql, databaseConnection);
             command.ExecuteNonQuery();
@@ -120,12 +136,9 @@ namespace wiquotes
 
         private void butKHandler(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<string, decimal> kvp in vals)
-            { insertIntoTableStr("kwoty", "name", "amount", Convert.ToString(kvp.Key), Convert.ToString(kvp.Value));
-
-                MessageBox.Show(kvp.Key);
-                MessageBox.Show(Convert.ToString(kvp.Value));
-            }
+            foreach (KeyValuePair<string, string> kvp in vals)
+                insertIntoTableStr("kwoty", "name", "amount",kvp.Key, kvp.Value);
+            
         }
 
         private void colorButClicked(object sender, EventArgs e)
@@ -141,7 +154,7 @@ namespace wiquotes
             if (but != null)
             {
                 string x = but.Name;
-                insertIntoTableStr("colors", "VARCHAR(20)", "VARCHAR(20)", x, Convert.ToString(colorPicker.Color));
+                insertIntoTableStr("colors", "name", "color", x, Convert.ToString(colorPicker.Color));
             }
 
           
