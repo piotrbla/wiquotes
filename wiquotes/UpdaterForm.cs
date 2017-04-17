@@ -32,12 +32,10 @@ namespace wiquotes
             else
             {
                 
-                
                 foreach (var Zip in NewFile.LoadFile(url_bar.Text))
                 {
                     list_http.Items.Add(Zip);
                 }
-
             }
         }
 
@@ -105,7 +103,13 @@ namespace wiquotes
             ZipEntry zipe = zip[IndexInZip];
             string txtTmp = "";
             string key = "";
-            string filePath = @"c:\temp\" + zipe.Name;
+            string filePath = System.Windows.Forms.Application.StartupPath + "../../../data/";
+            int i = 1;
+            if(!Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }
+            filePath = filePath + zipe.Name;
             List<decimal> columnValues = new List<decimal>();
             FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite);
             Stream s = zip.GetInputStream(zipe);
