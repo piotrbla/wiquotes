@@ -35,6 +35,7 @@
             this.add_item = new System.Windows.Forms.Button();
             this.delete_item = new System.Windows.Forms.Button();
             this.extract_button = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // url_bar
@@ -100,11 +101,19 @@
             this.extract_button.UseVisualStyleBackColor = true;
             this.extract_button.Click += new System.EventHandler(this.extract_button_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(12, 71);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(246, 23);
+            this.progressBar1.TabIndex = 7;
+            // 
             // UpdaterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 361);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.extract_button);
             this.Controls.Add(this.delete_item);
             this.Controls.Add(this.add_item);
@@ -128,5 +137,6 @@
         private System.Windows.Forms.Button add_item;
         private System.Windows.Forms.Button delete_item;
         private System.Windows.Forms.Button extract_button;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
